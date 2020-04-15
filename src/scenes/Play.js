@@ -5,7 +5,8 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load images/tile sprite
-        this.load.image('rock', './assets/rock1.png');
+        this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 15, frameHeight: 36,
+        startFrame: 0, endFrame: 1});
         this.load.image('spaceship', './assets/spaceship.png');
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
@@ -23,10 +24,10 @@ class Play extends Phaser.Scene {
         this.add.rectangle(5, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
         this.add.rectangle(603, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
         // green UI background
-        this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0, 0);
+        //this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0, 0);
 
         // add rock (p1)
-        this.p1Rock = new Rock(this, game.config.width/2, 106,
+        this.p1Rock = new Rock(this, game.config.width/2, 38,
         'rock').setScale(1, 1).setOrigin(0, 0);
 
         // add spaceship (x3)
