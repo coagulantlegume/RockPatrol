@@ -12,7 +12,7 @@ class Turtle extends Phaser.GameObjects.Sprite {
 
     update() {
         // move turtle left
-        this.x -= game.settings.spaceshipSpeed;
+        this.x -= game.settings.turtleSpeed;
         // wrap around screen bounds
         if(this.x <= 0 - this.width) {
             this.x = game.config.width;

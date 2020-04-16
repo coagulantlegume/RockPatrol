@@ -9,7 +9,7 @@ let game = new Phaser.Game(config);
 
 // define game settings
 game.settings = {
-    spaceshipSpeed: 3,
+    turtleSpeed: 3,
     gameTimer: 60000
 }
 
