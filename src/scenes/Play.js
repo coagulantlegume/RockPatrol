@@ -7,6 +7,7 @@ class Play extends Phaser.Scene {
         // load images/tile sprite
         this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 15, frameHeight: 36});
         this.load.spritesheet('turtle', './assets/turtle.png', {frameWidth: 33, frameHeight: 17});
+        this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 16, frameHeight: 14});
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
         frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -44,9 +45,19 @@ class Play extends Phaser.Scene {
              first: 2}), frameRate: 15,
         });
 
+        this.anims.create({
+            key: 'cut',
+            frames: this.anims.generateFrameNumbers('scissor', { start: 2, end: 0,
+             first: 2}), frameRate: 12,
+        });
+
         // add rock (p1)
         this.p1Rock = new Rock(this, game.config.width/2, 38,
-        'rock').setScale(1, 1).setOrigin(0, 0);
+        'rock').setScale(1.2, 1.2).setOrigin(0, 0);
+
+        // add scissor (p2)
+        this.p2Scissor = new Scissor(this, game.config.width/2, 38,
+            'scissor').setScale(1.5, 1.5).setOrigin(0, 0);
 
         // add turtle (x3)
         this.turt01 = new Turtle(this, game.config.width + 192, 196, 
@@ -62,9 +73,11 @@ class Play extends Phaser.Scene {
         this.turt03.fly();
 
         // define keyboard keys
-        keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
-        keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyScisCut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
+        keyScisLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.A);
+        keyScisRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.D);
+        keyRockLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRockRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
 
         // score
         this.p1Score = 0;
@@ -114,10 +127,22 @@ class Play extends Phaser.Scene {
             // update rock
             this.p1Rock.update();
 
+            // update scissor
+            this.p2Scissor.update();
+
             // update turtle
             this.turt01.update();
             this.turt02.update();
             this.turt03.update();
+        }
+
+        // check if scissors cutting
+        if(this.p2Scissor.isCutting) {
+            this.p2Scissor.cut();
+            if(this.checkCollision(this.p1Rock, this.p2Scissor)) {
+                this.p1Rock.isFiring = true;
+                this.p1Rock.setFrame(1);
+            }
         }
 
         // check collisions
@@ -161,5 +186,9 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
+    }
+
+    scissorCut() {
+        return;
     }
 }

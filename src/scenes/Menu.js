@@ -40,12 +40,12 @@ class Menu extends Phaser.Scene {
         //this.scene.start("playScene");
 
         // define keys
-        keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
-        keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
+        keyRockLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
+        keyRockRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
     }
 
     update() {
-        if (Phaser.Input.Keyboard.JustDown(keyLeft)) {
+        if (Phaser.Input.Keyboard.JustDown(keyRockLeft)) {
             // easy mode
             game.settings = {
                 turtleSpeed: 3,
@@ -54,7 +54,7 @@ class Menu extends Phaser.Scene {
             this.sound.play('sfx_select');
             this.scene.start("playScene");    
         }
-        if (Phaser.Input.Keyboard.JustDown(keyRight)) {
+        if (Phaser.Input.Keyboard.JustDown(keyRockRight)) {
             // hard mode
             game.settings = {
                 turtleSpeed: 4,

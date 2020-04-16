@@ -33,7 +33,6 @@ class Turtle extends Phaser.GameObjects.Sprite {
     }
 
     fall() {
-        this.x = game.config.width;
         this.anims.setRepeat(1);
         this.anims.setYoyo(false);
         this.anims.play('fall');

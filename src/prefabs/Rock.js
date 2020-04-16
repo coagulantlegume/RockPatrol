@@ -11,17 +11,11 @@ class Rock extends Phaser.GameObjects.Sprite {
     update() {
         // left/right movement
         if(!this.isFiring) {
-            if(keyLeft.isDown && this.x >= 47) {
+            if(keyRockLeft.isDown && this.x >= 47) {
                 this.x -= 3;
-            } else if(keyRight.isDown && this.x <= 578) {
+            } else if(keyRockRight.isDown && this.x <= 578) {
                 this.x += 3;
             }
-        }
-        // fire button
-        if(Phaser.Input.Keyboard.JustDown(keyF) && !this.isFiring) {
-            this.isFiring = true;
-            this.setFrame(1);
-            //this.sfxRocket.play(); // play sfx
         }
         // if fired, move down
         if(this.isFiring && this.y <= 455) {
