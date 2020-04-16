@@ -5,9 +5,8 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load images/tile sprite
-        this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 15, frameHeight: 36,
-        startFrame: 0, endFrame: 1});
-        this.load.image('spaceship', './assets/spaceship.png');
+        this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 15, frameHeight: 36});
+        this.load.spritesheet('turtle', './assets/turtle.png', {frameWidth: 33, frameHeight: 17});
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
         frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -26,30 +25,46 @@ class Play extends Phaser.Scene {
         // green UI background
         //this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0, 0);
 
+        // animation config
+        this.anims.create({
+            key: 'explode',
+            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9,
+            first: 0}), frameRate: 30,
+        });
+
+        this.anims.create({
+            key: 'fly',
+            frames: this.anims.generateFrameNumbers('turtle', { start: 0, end: 2,
+             first: 0}), frameRate: 15,
+        });
+
+        this.anims.create({
+            key: 'fall',
+            frames: this.anims.generateFrameNumbers('turtle', { start: 2, end: 6,
+             first: 2}), frameRate: 15,
+        });
+
         // add rock (p1)
         this.p1Rock = new Rock(this, game.config.width/2, 38,
         'rock').setScale(1, 1).setOrigin(0, 0);
 
-        // add spaceship (x3)
-        this.ship01 = new Spaceship(this, game.config.width + 192, 196, 
-        'spaceship', 0, 30).setOrigin(0, 0);
-        this.ship02 = new Spaceship(this, game.config.width + 96, 260, 
-        'spaceship', 0, 20).setOrigin(0, 0);
-        this.ship03 = new Spaceship(this, game.config.width, 324, 
-        'spaceship', 0, 10).setOrigin(0, 0);
+        // add turtle (x3)
+        this.turt01 = new Turtle(this, game.config.width + 192, 196, 
+        'turtle', 0, 30).setOrigin(0, 0);
+        this.turt02 = new Turtle(this, game.config.width + 96, 260, 
+        'turtle', 0, 20).setOrigin(0, 0);
+        this.turt03 = new Turtle(this, game.config.width, 324, 
+        'turtle', 0, 10).setOrigin(0, 0);
+
+        // start turtle animation (x3)
+        this.turt01.fly();
+        this.turt02.fly();
+        this.turt03.fly();
 
         // define keyboard keys
         keyF = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.F);
         keyLeft = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.LEFT);
         keyRight = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.RIGHT);
-        
-        // animation config
-        this.anims.create({
-            key: 'explode',
-            frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 9,
-            first: 0}),
-            frameRate: 30,
-        });
 
         // score
         this.p1Score = 0;
@@ -99,24 +114,24 @@ class Play extends Phaser.Scene {
             // update rock
             this.p1Rock.update();
 
-            // update spaceship
-            this.ship01.update();
-            this.ship02.update();
-            this.ship03.update();
+            // update turtle
+            this.turt01.update();
+            this.turt02.update();
+            this.turt03.update();
         }
 
         // check collisions
-        if(this.checkCollision(this.p1Rock, this.ship01)) {
+        if(this.checkCollision(this.p1Rock, this.turt01)) {
             this.p1Rock.reset();
-            this.shipExplode(this.ship01);
+            this.shipExplode(this.turt01);
         }
-        if(this.checkCollision(this.p1Rock, this.ship02)) {
+        if(this.checkCollision(this.p1Rock, this.turt02)) {
             this.p1Rock.reset();
-            this.shipExplode(this.ship02);
+            this.shipExplode(this.turt02);
         }
-        if(this.checkCollision(this.p1Rock, this.ship03)) {
+        if(this.checkCollision(this.p1Rock, this.turt03)) {
             this.p1Rock.reset();
-            this.shipExplode(this.ship03);
+            this.shipExplode(this.turt03);
         }
     }
 
