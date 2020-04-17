@@ -5,9 +5,9 @@ class Play extends Phaser.Scene {
 
     preload() {
         // load images/tile sprite
-        this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 15, frameHeight: 36});
+        this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 16, frameHeight: 64});
         this.load.spritesheet('turtle', './assets/turtle.png', {frameWidth: 33, frameHeight: 17});
-        this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 16, frameHeight: 14});
+        this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
         frameHeight: 32, startFrame: 0, endFrame: 9});
@@ -47,17 +47,18 @@ class Play extends Phaser.Scene {
 
         this.anims.create({
             key: 'cut',
-            frames: this.anims.generateFrameNumbers('scissor', { start: 2, end: 0,
-             first: 2}), frameRate: 12,
+            frames: this.anims.generateFrameNumbers('scissor', { start: 0, end: 4,
+             first: 0}), frameRate: 30,
         });
 
         // add rock (p1)
         this.p1Rock = new Rock(this, game.config.width/2, 38,
-        'rock').setScale(1.2, 1.2).setOrigin(0, 0);
+        'rock').setOrigin(0, 0);
+        this.p1Rock.setFrame(this.p1Rock.rockNum * 2);
 
         // add scissor (p2)
         this.p2Scissor = new Scissor(this, game.config.width/2, 38,
-            'scissor').setScale(1.5, 1.5).setOrigin(0, 0);
+            'scissor').setOrigin(0, 0);
 
         // add turtle (x3)
         this.turt01 = new Turtle(this, game.config.width + 192, 196, 
@@ -113,10 +114,10 @@ class Play extends Phaser.Scene {
 
     update() {
         // check key input for restart
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyF)) {
+        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyScisCut)) {
             this.scene.restart(this.p1Score);
         }
-        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyLeft)) {
+        if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyRockLeft)) {
             this.scene.start("menuScene");
         }
 
@@ -186,9 +187,5 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_explosion');
-    }
-
-    scissorCut() {
-        return;
     }
 }

@@ -6,6 +6,7 @@ class Rock extends Phaser.GameObjects.Sprite {
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         this.isFiring = false;    // track rock's firing status
         this.sfxRocket = scene.sound.add('sfx_rocket'); // add rocket sfx
+        this.rockNum = Math.floor(Math.random() * 3);
     }
 
     update() {
@@ -19,7 +20,7 @@ class Rock extends Phaser.GameObjects.Sprite {
         }
         // if fired, move down
         if(this.isFiring && this.y <= 455) {
-            this.y += 3;
+            this.y += 4;
         }
         // reset on miss
         if(this.y >= 455) {
@@ -30,6 +31,7 @@ class Rock extends Phaser.GameObjects.Sprite {
     reset() {
         this.isFiring = false;
         this.y = 38;
-        this.setFrame(0);
+        this.rockNum = Math.floor(Math.random() * 3);
+        this.setFrame(this.rockNum * 2);
     }
 }
