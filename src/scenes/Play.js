@@ -138,8 +138,7 @@ class Play extends Phaser.Scene {
         }
 
         // check if scissors cutting
-        if(this.p2Scissor.isCutting) {
-            this.p2Scissor.cut();
+        if(this.p2Scissor.anims.currentFrame.index == 4) {
             if(this.checkCollision(this.p1Rock, this.p2Scissor)) {
                 this.p1Rock.isFiring = true;
                 this.p1Rock.setFrame(1);
