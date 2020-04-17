@@ -48,7 +48,7 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyRockLeft)) {
             // easy mode
             game.settings = {
-                turtleSpeed: 3,
+                planeSpeed: 3,
                 gameTimer: 60000    
             }
             this.sound.play('sfx_select');
@@ -57,7 +57,7 @@ class Menu extends Phaser.Scene {
         if (Phaser.Input.Keyboard.JustDown(keyRockRight)) {
             // hard mode
             game.settings = {
-                turtleSpeed: 4,
+                planeSpeed: 4,
                 gameTimer: 45000    
             }
             this.sound.play('sfx_select');

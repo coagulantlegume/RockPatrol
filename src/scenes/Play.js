@@ -6,7 +6,7 @@ class Play extends Phaser.Scene {
     preload() {
         // load images/tile sprite
         this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 16, frameHeight: 64});
-        this.load.spritesheet('turtle', './assets/turtle.png', {frameWidth: 33, frameHeight: 17});
+        this.load.spritesheet('plane', './assets/plane.png', {frameWidth: 64, frameHeight: 32});
         this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
         this.load.image('starfield', './assets/starfield.png');
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
@@ -15,14 +15,14 @@ class Play extends Phaser.Scene {
 
     create() {
         // place tile sprite
-        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').
+        this.starfield = this.add.tileSprite(0, 0, 640, 480, 'starfield').setScale(2,2).
         setOrigin(0, 0);
 
         // white rectangle borders
-        this.add.rectangle(5, 5, 630, 32, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(5, 443, 630, 32, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(5, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
-        this.add.rectangle(603, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
+        //this.add.rectangle(5, 5, 630, 32, 0xFFFFFF).setOrigin(0, 0);
+        //this.add.rectangle(5, 443, 630, 32, 0xFFFFFF).setOrigin(0, 0);
+        //this.add.rectangle(5, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
+        //this.add.rectangle(603, 5, 32, 455, 0xFFFFFF).setOrigin(0, 0);
         // green UI background
         //this.add.rectangle(37, 42, 566, 64, 0x00FF00).setOrigin(0, 0);
 
@@ -35,13 +35,13 @@ class Play extends Phaser.Scene {
 
         this.anims.create({
             key: 'fly',
-            frames: this.anims.generateFrameNumbers('turtle', { start: 0, end: 2,
-             first: 0}), frameRate: 15,
+            frames: this.anims.generateFrameNumbers('plane', { start: 0, end: 8,
+             first: 0}), frameRate: 8,
         });
 
         this.anims.create({
             key: 'fall',
-            frames: this.anims.generateFrameNumbers('turtle', { start: 2, end: 6,
+            frames: this.anims.generateFrameNumbers('plane', { start: 2, end: 6,
              first: 2}), frameRate: 15,
         });
 
@@ -60,18 +60,18 @@ class Play extends Phaser.Scene {
         this.p2Scissor = new Scissor(this, game.config.width/2, 38,
             'scissor').setOrigin(0, 0);
 
-        // add turtle (x3)
-        this.turt01 = new Turtle(this, game.config.width + 192, 196, 
-        'turtle', 0, 30).setOrigin(0, 0);
-        this.turt02 = new Turtle(this, game.config.width + 96, 260, 
-        'turtle', 0, 20).setOrigin(0, 0);
-        this.turt03 = new Turtle(this, game.config.width, 324, 
-        'turtle', 0, 10).setOrigin(0, 0);
+        // add plane (x3)
+        this.plane01 = new Plane(this, game.config.width + 192, 196, 
+        'plane', 0, 30).setOrigin(0, 0);
+        this.plane02 = new Plane(this, game.config.width + 96, 260, 
+        'plane', 0, 20).setOrigin(0, 0);
+        this.plane03 = new Plane(this, game.config.width, 324, 
+        'plane', 0, 10).setOrigin(0, 0);
 
-        // start turtle animation (x3)
-        this.turt01.fly();
-        this.turt02.fly();
-        this.turt03.fly();
+        // start plane animation (x3)
+        this.plane01.fly();
+        this.plane02.fly();
+        this.plane03.fly();
 
         // define keyboard keys
         keyScisCut = this.input.keyboard.addKey(Phaser.Input.Keyboard.KeyCodes.SPACE);
@@ -109,6 +109,9 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width / 2, game.config.height / 2 + 64,
                 '(F)ire to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
+            this.plane01.anims.pause();
+            this.plane02.anims.pause();
+            this.plane03.anims.pause();
         }, null, this);
     }
 
@@ -122,7 +125,7 @@ class Play extends Phaser.Scene {
         }
 
         // scroll starfield
-        this.starfield.tilePositionX -= 4;
+        this.starfield.tilePositionX -= 2;
 
         if(!this.gameOver) {
             // update rock
@@ -131,41 +134,41 @@ class Play extends Phaser.Scene {
             // update scissor
             this.p2Scissor.update();
 
-            // update turtle
-            this.turt01.update();
-            this.turt02.update();
-            this.turt03.update();
+            // update plane
+            this.plane01.update();
+            this.plane02.update();
+            this.plane03.update();
         }
 
         // check if scissors cutting
         if(this.p2Scissor.anims.currentFrame.index == 4) {
             if(this.checkCollision(this.p1Rock, this.p2Scissor)) {
                 this.p1Rock.isFiring = true;
-                this.p1Rock.setFrame(1);
+                this.p1Rock.setFrame(this.p1Rock.rockNum * 2 + 1);
             }
         }
 
         // check collisions
-        if(this.checkCollision(this.p1Rock, this.turt01)) {
+        if(this.checkCollision(this.p1Rock, this.plane01)) {
             this.p1Rock.reset();
-            this.shipExplode(this.turt01);
+            this.shipExplode(this.plane01);
         }
-        if(this.checkCollision(this.p1Rock, this.turt02)) {
+        if(this.checkCollision(this.p1Rock, this.plane02)) {
             this.p1Rock.reset();
-            this.shipExplode(this.turt02);
+            this.shipExplode(this.plane02);
         }
-        if(this.checkCollision(this.p1Rock, this.turt03)) {
+        if(this.checkCollision(this.p1Rock, this.plane03)) {
             this.p1Rock.reset();
-            this.shipExplode(this.turt03);
+            this.shipExplode(this.plane03);
         }
     }
 
-    checkCollision(rock, ship) {
+    checkCollision(obj1, obj2) {
         // simple AABB checking
-        if(rock.x < ship.x + ship.width && 
-           rock.x + rock.width > ship.x &&
-           rock.y < ship.y + ship.height &&
-           rock.height + rock.y > ship.y) {
+        if(obj1.x < obj2.x + obj2.width && 
+           obj1.x + obj1.width > obj2.x &&
+           obj1.y < obj2.y + obj2.height &&
+           obj1.height + obj1.y > obj2.y) {
                 return true;
         } else {
             return false;

@@ -1,5 +1,5 @@
-// Turtle prefab
-class Turtle extends Phaser.GameObjects.Sprite {
+// Plane prefab
+class Plane extends Phaser.GameObjects.Sprite {
     constructor(scene, x, y, texture, frame, pointValue) {
         super(scene, x, y, texture, frame);
 
@@ -11,8 +11,8 @@ class Turtle extends Phaser.GameObjects.Sprite {
     }
 
     update() {
-        // move turtle left
-        this.x -= game.settings.turtleSpeed;
+        // move Plane left
+        this.x -= game.settings.planeSpeed;
         // wrap around screen bounds
         if(this.x <= 0 - this.width) {
             this.x = game.config.width;
