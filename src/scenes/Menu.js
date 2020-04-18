@@ -13,8 +13,8 @@ class Menu extends Phaser.Scene {
     create() {
         // menu display
         let menuConfig = {
-            fontFamily: 'Courier',
-            fontSize: '28px',
+            fontFamily: 'Tandysoft',
+            fontSize: '50px',
             backgroundColor: '#F3B141',
             color: '#843605',
             align: 'right',
@@ -28,13 +28,15 @@ class Menu extends Phaser.Scene {
         // display menu text
         let centerX = game.config.width / 2;
         let centerY = game.config.height / 2;
-        let textSpacer = 64;
+        let textSpacer = 32;
 
-        this.add.text(centerX, centerY - textSpacer, 'ROCKET PATROL', menuConfig).setOrigin(0.5);
-        this.add.text(centerX, centerY, 'Use ←→ arrows to move & (F) to Fire', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY - textSpacer - 25, ' ROCK PATROL ', menuConfig).setOrigin(0.5);
+        menuConfig.fontSize = '20px';
+        this.add.text(centerX, centerY, ' Rock(P1): Use ← & → arrows to move ', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + textSpacer + 10, ' Scissors(P2): Use (A) & (D) to move & (SPACE) to cut ', menuConfig).setOrigin(0.5);
         menuConfig.backgroundColor = '#00FF00';
         menuConfig.color = '#000';
-        this.add.text(centerX, centerY + textSpacer, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
+        this.add.text(centerX, centerY + 2 * textSpacer + 20, 'Press ← for Easy or → for Hard', menuConfig).setOrigin(0.5);
 
         // launch next scene
         //this.scene.start("playScene");

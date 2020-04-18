@@ -71,13 +71,13 @@ class Play extends Phaser.Scene {
         });
 
         // add rock (p1)
-        this.p1Rock = new Rock(this, game.config.width/2, 32,
-            'rock');
+        this.p1Rock = new Rock(this, game.config.width/2, 0,
+            'rock').setOrigin(0,0);
         this.p1Rock.setFrame(this.p1Rock.rockNum * 2);
 
         // add scissor (p2)
-        this.p2Scissor = new Scissor(this, game.config.width/2, 21,
-            'scissor');
+        this.p2Scissor = new Scissor(this, game.config.width/2, 5,
+            'scissor').setOrigin(0,0);
 
         // add plane (x3)
         this.plane01 = new Plane(this, game.config.width + 192, 196, 
@@ -170,8 +170,8 @@ class Play extends Phaser.Scene {
 
         // check if scissors cutting
         if(this.p2Scissor.anims.currentFrame.index == 4) {
-            if((this.p2Scissor.x - this.p1Rock.x) >= (-this.p2Scissor.width / 2) &&
-                                           (this.p2Scissor.x - this.p1Rock.x) <= 0) {
+            if((this.p1Rock.x - this.p2Scissor.x) >= this.p2Scissor.width / 2 - 8 &&
+            (this.p1Rock.x - this.p2Scissor.x) <= this.p2Scissor.width - 8) {
                 this.p1Rock.isFiring = true;
                 this.p1Rock.setFrame(this.p1Rock.rockNum * 2 + 1);
             }
@@ -194,10 +194,10 @@ class Play extends Phaser.Scene {
 
     checkCollision(rock, plane) {
         // simple AABB checking
-        if(rock.x < plane.x + plane.width && 
-           rock.x + rock.width > plane.x &&
-           rock.y < plane.y + plane.height &&
-           rock.y > plane.y) {
+        if(rock.x < plane.x + plane.width &&
+            rock.x + rock.width > plane.x &&
+            rock.y + rock.height / 2 < plane.y + plane.height &&
+            rock.y + rock.height > plane.y) {
                 return true;
         } else {
             return false;

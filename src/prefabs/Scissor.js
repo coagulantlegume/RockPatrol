@@ -11,9 +11,9 @@ class Scissor extends Phaser.GameObjects.Sprite {
     update() {
         // left/right movement
         if(!this.isCutting) {
-            if(keyScisLeft.isDown && this.x >= 32) {
+            if(keyScisLeft.isDown && this.x >= 0) {
                 this.x -= 3;
-            } else if(keyScisRight.isDown && this.x <= 608) {
+            } else if(keyScisRight.isDown && this.x <= 576) {
                 this.x += 3;
             }
         }

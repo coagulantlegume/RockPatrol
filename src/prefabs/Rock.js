@@ -12,7 +12,7 @@ class Rock extends Phaser.GameObjects.Sprite {
     update() {
         // left/right movement
         if(!this.isFiring) {
-            if(keyRockLeft.isDown && this.x >= 16) {
+            if(keyRockLeft.isDown && this.x >= 0) {
                 this.x -= 3;
             } else if(keyRockRight.isDown && this.x <= 624) {
                 this.x += 3;
@@ -30,7 +30,7 @@ class Rock extends Phaser.GameObjects.Sprite {
 
     reset() {
         this.isFiring = false;
-        this.y = 32;
+        this.y = 0;
         this.rockNum = Math.floor(Math.random() * 3);
         this.setFrame(this.rockNum * 2);
     }
