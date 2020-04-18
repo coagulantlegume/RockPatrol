@@ -60,7 +60,7 @@ class Menu extends Phaser.Scene {
                 planeSpeed: 4,
                 gameTimer: 45000    
             }
-            this.sound.play('sfx_select');
+            //this.sound.play('sfx_select');
             this.scene.start("playScene");    
         }
     }
