@@ -104,7 +104,7 @@ class Play extends Phaser.Scene {
 
         // score display
         let scoreConfig = {
-            fontFamily: 'Courier',
+            fontFamily: 'Tandysoft',
             fontSize: '28px',
             backgroundColor: '#F3B141',
             color: '#843605',
@@ -115,7 +115,7 @@ class Play extends Phaser.Scene {
             },
             fixedWidth: 100,
         }
-        this.scoreLeft = this.add.text(69, 54, this.p1Score, scoreConfig);
+        this.scoreLeft = this.add.text(510, 410, this.p1Score, scoreConfig);
 
         // game over flag
         this.gameOver = false;
@@ -126,7 +126,7 @@ class Play extends Phaser.Scene {
             this.add.text(game.config.width / 2, game.config.height / 2,
                 'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width / 2, game.config.height / 2 + 64,
-                '(F)ire to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+                '(SPACE) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
             this.plane01.anims.pause();
             this.plane02.anims.pause();
