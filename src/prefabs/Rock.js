@@ -12,9 +12,9 @@ class Rock extends Phaser.GameObjects.Sprite {
     update() {
         // left/right movement
         if(!this.isFiring) {
-            if(keyRockLeft.isDown && this.x >= 0) {
+            if(keyRockLeft.isDown && this.x >= 10) {
                 this.x -= 3;
-            } else if(keyRockRight.isDown && this.x <= 624) {
+            } else if(keyRockRight.isDown && this.x <= 619) {
                 this.x += 3;
             }
         }
