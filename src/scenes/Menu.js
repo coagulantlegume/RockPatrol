@@ -79,7 +79,7 @@ class Menu extends Phaser.Scene {
             // hard mode
             game.settings = {
                 planeSpeed: 4,
-                gameTimer: 4500    
+                gameTimer: 45000    
             }
             //this.sound.play('sfx_select');
             this.scene.start("playScene");    
