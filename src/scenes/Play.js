@@ -8,8 +8,6 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 16, frameHeight: 64});
         this.load.spritesheet('plane', './assets/plane.png', {frameWidth: 64, frameHeight: 32});
         this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
-        this.load.atlas('background', './assets/background.png', './assets/background.json',
-            Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
             frameHeight: 32, startFrame: 0, endFrame: 9});
     }
@@ -106,8 +104,8 @@ class Play extends Phaser.Scene {
         let scoreConfig = {
             fontFamily: 'Tandysoft',
             fontSize: '28px',
-            backgroundColor: '#F3B141',
-            color: '#843605',
+            backgroundColor: '#AEFF51',
+            color: '#000',
             align: 'right',
             padding: {
                 top: 5,
@@ -123,10 +121,12 @@ class Play extends Phaser.Scene {
         // 60-second play clock
         scoreConfig.fixedWidth = 0;
         this.clock = this.time.delayedCall(game.settings.gameTimer, () => {
-            this.add.text(game.config.width / 2, game.config.height / 2,
-                'GAME OVER', scoreConfig).setOrigin(0.5);
             this.add.text(game.config.width / 2, game.config.height / 2 + 64,
-                '(SPACE) to Restart or ← for Menu', scoreConfig).setOrigin(0.5);
+                ' (SPACE) to Restart or ← for Menu ', scoreConfig).setOrigin(0.5);
+            scoreConfig.backgroundColor = '#FF0013';
+            scoreConfig.fontSize = '50px';
+            this.add.text(game.config.width / 2, game.config.height / 2,
+                ' GAME OVER ', scoreConfig).setOrigin(0.5);
             this.gameOver = true;
             this.plane01.anims.pause();
             this.plane02.anims.pause();
