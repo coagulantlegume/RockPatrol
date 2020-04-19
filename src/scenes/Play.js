@@ -70,12 +70,12 @@ class Play extends Phaser.Scene {
 
         // add rock (p1)
         this.p1Rock = new Rock(this, game.config.width/2, 0,
-            'rock').setOrigin(0,0);
+            'rock').setOrigin(0,0).setScale(1.2);
         this.p1Rock.setFrame(this.p1Rock.rockNum * 2);
 
         // add scissor (p2)
         this.p2Scissor = new Scissor(this, game.config.width/2, 5,
-            'scissor').setOrigin(0,0);
+            'scissor').setOrigin(0,0).setScale(1.2);
 
         // add plane (x3)
         this.plane01 = new Plane(this, game.config.width + 192, 196, 
@@ -171,7 +171,7 @@ class Play extends Phaser.Scene {
         // check if scissors cutting
         if(this.p2Scissor.anims.currentFrame.index == 4) {
             if((this.p1Rock.x - this.p2Scissor.x) >= this.p2Scissor.width / 2 - 8 &&
-            (this.p1Rock.x - this.p2Scissor.x) <= this.p2Scissor.width - 8) {
+            (this.p1Rock.x - this.p2Scissor.x) <= this.p2Scissor.width) {
                 this.p1Rock.isFiring = true;
                 this.p1Rock.setFrame(this.p1Rock.rockNum * 2 + 1);
             }
@@ -217,6 +217,6 @@ class Play extends Phaser.Scene {
         // score increment and repaint
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
-        //this.sound.play('sfx_explosion');
+        this.sound.play('sfx_tear');
     }
 }

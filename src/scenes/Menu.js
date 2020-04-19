@@ -6,8 +6,8 @@ class Menu extends Phaser.Scene {
     preload() {
         // load audio
         this.load.audio('sfx_select', './assets/blip_select12.wav');
-        this.load.audio('sfx_explosion', './assets/explosion38.wav');
-        this.load.audio('sfx_rocket', './assets/rocket_shot.wav');
+        this.load.audio('sfx_tear', './assets/tear.wav');
+        this.load.audio('sfx_cut', './assets/cut.wav');
 
         // load background
         this.load.atlas('background', './assets/background.png', './assets/background.json',
@@ -84,8 +84,8 @@ class Menu extends Phaser.Scene {
             //this.sound.play('sfx_select');
             this.scene.start("playScene");    
         }
-        this.back1.tilePositionX -= .05;
-        this.back2.tilePositionX -= .3;
+        this.back1.tilePositionX -= .1;
+        this.back2.tilePositionX -= .2;
         this.back3.tilePositionX -= .45;
         this.back7.tilePositionX -= .05;
         this.back8.tilePositionX -= .1;

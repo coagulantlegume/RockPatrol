@@ -6,6 +6,7 @@ class Scissor extends Phaser.GameObjects.Sprite {
         scene.add.existing(this); // add object to existing scene, displayList, updateList
         this.isCutting = false;    // track scissor's cutting status
         this.anims.load('cut');
+        this.sfxCut = scene.sound.add('sfx_cut'); // add cut sfx
     }
 
     update() {
@@ -13,7 +14,7 @@ class Scissor extends Phaser.GameObjects.Sprite {
         if(!this.isCutting) {
             if(keyScisLeft.isDown && this.x >= 0) {
                 this.x -= 3;
-            } else if(keyScisRight.isDown && this.x <= 576) {
+            } else if(keyScisRight.isDown && this.x <= 565) {
                 this.x += 3;
             }
         }
@@ -34,6 +35,7 @@ class Scissor extends Phaser.GameObjects.Sprite {
         this.anims.setRepeat(0);
         this.anims.setYoyo(true);
         this.anims.play('cut');
+        this.sfxCut.play();
 
         this.on('animationcomplete', () => { 
             this.isCutting = false;
