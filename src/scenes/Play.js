@@ -10,6 +10,7 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
             frameHeight: 32, startFrame: 0, endFrame: 9});
+        //this.clouds = [this.load.sprite]
     }
 
     create() {
@@ -65,7 +66,7 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'cut',
             frames: this.anims.generateFrameNumbers('scissor', { start: 0, end: 4,
-                first: 0}), frameRate: 30,
+                first: 0}), frameRate: 35,
         });
 
         // add rock (p1)
@@ -79,11 +80,11 @@ class Play extends Phaser.Scene {
 
         // add plane (x3)
         this.plane01 = new Plane(this, game.config.width + 192, 196, 
-            'plane', 0, 30).setOrigin(0, 0);
+            'plane', 0, 10).setOrigin(0, 0);
         this.plane02 = new Plane(this, game.config.width + 96, 260, 
             'plane', 0, 20).setOrigin(0, 0);
         this.plane03 = new Plane(this, game.config.width, 324, 
-            'plane', 0, 10).setOrigin(0, 0);
+            'plane', 0, 30).setOrigin(0, 0);
 
         // start plane animation (x3)
         this.plane01.fly();
@@ -137,9 +138,11 @@ class Play extends Phaser.Scene {
     update() {
         // check key input for restart
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyScisCut)) {
+            this.sound.play('sfx_thunk');
             this.scene.restart(this.p1Score);
         }
         if(this.gameOver && Phaser.Input.Keyboard.JustDown(keyRockLeft)) {
+            this.sound.play('sfx_thunk');
             this.scene.start("menuScene");
         }
 

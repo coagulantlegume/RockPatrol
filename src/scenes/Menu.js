@@ -5,7 +5,7 @@ class Menu extends Phaser.Scene {
 
     preload() {
         // load audio
-        this.load.audio('sfx_select', './assets/blip_select12.wav');
+        this.load.audio('sfx_thunk', './assets/thunk.wav');
         this.load.audio('sfx_tear', './assets/tear.wav');
         this.load.audio('sfx_cut', './assets/cut.wav');
 
@@ -72,7 +72,7 @@ class Menu extends Phaser.Scene {
                 planeSpeed: 3,
                 gameTimer: 60000    
             }
-            this.sound.play('sfx_select');
+            this.sound.play('sfx_thunk');
             this.scene.start("playScene");    
         }
         if (Phaser.Input.Keyboard.JustDown(keyRockRight)) {
@@ -82,6 +82,7 @@ class Menu extends Phaser.Scene {
                 gameTimer: 45000    
             }
             //this.sound.play('sfx_select');
+            this.sound.play('sfx_thunk');
             this.scene.start("playScene");    
         }
         this.back1.tilePositionX -= .1;

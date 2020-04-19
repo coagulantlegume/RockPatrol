@@ -10,7 +10,7 @@ let game = new Phaser.Game(config);
 // define game settings
 game.settings = {
     planeSpeed: 3,
-    gameTimer: 60000
+    gameTimer: 60000,
 }
 
 // reserve some keyboard variables
