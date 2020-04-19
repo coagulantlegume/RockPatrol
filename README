@@ -3,3 +3,9 @@ https://coagulantlegume.github.io/RockPatrol/
 
 50 - Implement a simultaneous two-player mode
 50 - Redesign the game's artwork, UI, and sound to change its theme/aesthetic (to something other than sci-fi)
+15 - Implement parallax scrolling
+
+Credits:
+Mechanics based on Rocket Patrol(1978)
+Code base from Nathan Altice's tutorial http://ex-artist.com/CMPM120/Phaser%203%20Rocket%20Patrol%20Tutorial.html
+All additional code, design, art assets, and sound created by Alec Wolf
