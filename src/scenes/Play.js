@@ -9,7 +9,7 @@ class Play extends Phaser.Scene {
         // load images/tile sprite
         this.load.spritesheet('rock', './assets/rock.png', {frameWidth: 16, frameHeight: 64});
         this.load.spritesheet('plane', './assets/plane.png', {frameWidth: 64, frameHeight: 32});
-        this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
+        this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 77, frameHeight: 39});
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
             frameHeight: 32, startFrame: 0, endFrame: 9});
         this.load.atlas('clouds', './assets/clouds.png', './assets/clouds.json',
@@ -79,7 +79,7 @@ class Play extends Phaser.Scene {
 
         // add scissor (p2)
         this.p2Scissor = new Scissor(this, game.config.width/2, 5,
-            'scissor').setOrigin(0,0).setScale(1.2);
+            'scissor').setOrigin(0,0);
 
         // add plane (x3)
         this.plane01 = new Plane(this, game.config.width + 192, 260, 
