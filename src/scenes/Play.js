@@ -205,7 +205,15 @@ class Play extends Phaser.Scene {
             }
         }
 
-        // check collisions
+        // check cloud collisions
+        for(let element of this.currClouds) {
+            if(this.checkCollisionCloud(this.p1Rock, element)) {
+                this.sound.play('sfx_thunk');
+                this.p1Rock.reset();
+            }
+        }
+
+        // check plane collisions
         if(this.checkCollisionPlane(this.p1Rock, this.plane01)) {
             this.p1Rock.reset();
             this.shipExplode(this.plane01);
@@ -226,6 +234,18 @@ class Play extends Phaser.Scene {
             rock.x + rock.width > plane.x &&
             rock.y + rock.height / 2 < plane.y + plane.height &&
             rock.y + rock.height > plane.y) {
+                return true;
+        } else {
+            return false;
+        }
+    }
+
+    checkCollisionCloud(rock, cloud) {
+        // simple AABB checking
+        if(rock.x < cloud.x &&
+           rock.x + rock.width > cloud.x - cloud.width &&
+           rock.y + rock.height / 2 < cloud.y + cloud.height &&
+           rock.y + rock.height > cloud.y + cloud.height / 2) {
                 return true;
         } else {
             return false;
