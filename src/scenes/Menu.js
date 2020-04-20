@@ -70,6 +70,7 @@ class Menu extends Phaser.Scene {
             // easy mode
             game.settings = {
                 planeSpeed: 3,
+                cloudGap: 3,
                 gameTimer: 60000    
             }
             this.sound.play('sfx_thunk');
@@ -79,6 +80,7 @@ class Menu extends Phaser.Scene {
             // hard mode
             game.settings = {
                 planeSpeed: 4,
+                cloudGap: 2,
                 gameTimer: 45000    
             }
             //this.sound.play('sfx_select');

@@ -1,6 +1,8 @@
 class Play extends Phaser.Scene {
     constructor() {
         super("playScene");
+        this.currClouds = [];
+        this.cloudWidth = 0;
     }
 
     preload() {
@@ -10,7 +12,8 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 64, frameHeight: 32});
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
             frameHeight: 32, startFrame: 0, endFrame: 9});
-        //this.clouds = [this.load.sprite]
+        this.load.atlas('clouds', './assets/clouds.png', './assets/clouds.json',
+            Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     }
 
     create() {
@@ -79,11 +82,11 @@ class Play extends Phaser.Scene {
             'scissor').setOrigin(0,0).setScale(1.2);
 
         // add plane (x3)
-        this.plane01 = new Plane(this, game.config.width + 192, 196, 
+        this.plane01 = new Plane(this, game.config.width + 192, 260, 
             'plane', 0, 10).setOrigin(0, 0);
-        this.plane02 = new Plane(this, game.config.width + 96, 260, 
+        this.plane02 = new Plane(this, game.config.width + 96, 324, 
             'plane', 0, 20).setOrigin(0, 0);
-        this.plane03 = new Plane(this, game.config.width, 324, 
+        this.plane03 = new Plane(this, game.config.width, 388, 
             'plane', 0, 30).setOrigin(0, 0);
 
         // start plane animation (x3)
@@ -157,6 +160,28 @@ class Play extends Phaser.Scene {
         this.back8.tilePositionX -= .15;
         this.back9.tilePositionX -= .2;
 
+        // add clouds
+        while(this.cloudWidth < game.config.width) {
+            let newCloud = this.add.sprite(game.config.width - this.cloudWidth, Math.floor(Math.random() * 125 + 100),
+            'clouds', Math.floor(Math.random() * 6 + 1)).setOrigin(1,0); // new random cloud
+            this.currClouds.push(newCloud); // add to array of current clouds
+            this.cloudWidth += newCloud.width * game.settings.cloudGap; // recalculate end of cloud
+        }
+
+        // scroll clouds
+        for(let element of this.currClouds) {
+            element.x += 1;
+        }
+        this.cloudWidth -= 1;
+
+        // remove clouds
+        for(let element of this.currClouds) {
+            if(element.x > game.config.width + element.width) {
+                element.destroy();
+                this.currClouds.shift();
+            }
+        }
+
 
         if(!this.gameOver) {
             // update rock
@@ -181,21 +206,21 @@ class Play extends Phaser.Scene {
         }
 
         // check collisions
-        if(this.checkCollision(this.p1Rock, this.plane01)) {
+        if(this.checkCollisionPlane(this.p1Rock, this.plane01)) {
             this.p1Rock.reset();
             this.shipExplode(this.plane01);
         }
-        if(this.checkCollision(this.p1Rock, this.plane02)) {
+        if(this.checkCollisionPlane(this.p1Rock, this.plane02)) {
             this.p1Rock.reset();
             this.shipExplode(this.plane02);
         }
-        if(this.checkCollision(this.p1Rock, this.plane03)) {
+        if(this.checkCollisionPlane(this.p1Rock, this.plane03)) {
             this.p1Rock.reset();
             this.shipExplode(this.plane03);
         }
     }
 
-    checkCollision(rock, plane) {
+    checkCollisionPlane(rock, plane) {
         // simple AABB checking
         if(rock.x < plane.x + plane.width &&
             rock.x + rock.width > plane.x &&
