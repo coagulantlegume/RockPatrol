@@ -11,7 +11,9 @@ class Play extends Phaser.Scene {
         this.load.spritesheet('plane', './assets/plane.png', {frameWidth: 64, frameHeight: 32});
         this.load.spritesheet('scissor', './assets/scissor.png', {frameWidth: 77, frameHeight: 39});
         this.load.spritesheet('explosion', './assets/explosion.png', {frameWidth: 64,
-            frameHeight: 32, startFrame: 0, endFrame: 9});
+            frameHeight: 32, startFrame: 0, endFrame: 6});
+        this.load.spritesheet('rockExplosion', './assets/rockExplode.png', {frameWidth: 32,
+            frameHeight: 40, startFrame: 0, endFrame: 6});
         this.load.atlas('clouds', './assets/clouds.png', './assets/clouds.json',
             Phaser.Loader.TEXTURE_ATLAS_JSON_HASH);
     }
@@ -51,6 +53,12 @@ class Play extends Phaser.Scene {
         this.anims.create({
             key: 'explode',
             frames: this.anims.generateFrameNumbers('explosion', { start: 0, end: 6,
+                first: 0}), frameRate: 30,
+        });
+
+        this.anims.create({
+            key: 'rockExplode',
+            frames: this.anims.generateFrameNumbers('rockExplosion', { start: 0, end: 6,
                 first: 0}), frameRate: 30,
         });
 
@@ -206,10 +214,11 @@ class Play extends Phaser.Scene {
         }
 
         // check cloud collisions
-        for(let element of this.currClouds) {
-            if(this.checkCollisionCloud(this.p1Rock, element)) {
-                this.sound.play('sfx_thunk');
-                this.p1Rock.reset();
+        if(!this.p1Rock.isExploding) {
+            for(let element of this.currClouds) {
+                if(this.checkCollisionCloud(this.p1Rock, element)) {
+                    this.rockExplode();
+                }
             }
         }
 
@@ -266,5 +275,20 @@ class Play extends Phaser.Scene {
         this.p1Score += ship.points;
         this.scoreLeft.text = this.p1Score;
         this.sound.play('sfx_tear');
+    }
+
+    rockExplode() {
+        this.p1Rock.alpha = 0                        // temporarily hide ship
+        // create explosion sprite at ship's position
+        let boom = this.add.sprite(this.p1Rock.x, this.p1Rock.y + this.p1Rock.height / 2, 'rockExplosion').setOrigin(0,0);
+        boom.anims.play('rockExplode'); // play explode animation
+        this.p1Rock.isExploding = true;
+        boom.on('animationcomplete', () => {  // callback after animation completes
+            this.p1Rock.reset();                     // reset ship position
+            this.p1Rock.alpha = 1;                   // make ship visible again
+            boom.destroy();                   // remove explosion sprite
+            this.p1Rock.isExploding = false;
+        });
+        this.sound.play('sfx_thunk');
     }
 }
